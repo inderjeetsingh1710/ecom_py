@@ -1,0 +1,104 @@
+{% load static %}
+<div id="footer" class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <h5 class="footer-title">What is Lorem Ipsum?</h5>
+                <ul class="footer-links">
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                </ul>	
+            </div>
+            <div class="col-md-3">
+                <h5 class="footer-title">What is Lorem Ipsum?</h5>
+                <ul class="footer-links">
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                </ul>	
+            
+            </div>
+            <div class="col-md-3">
+                <h5 class="footer-title">What is Lorem Ipsum?</h5>
+                <ul class="footer-links">
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                </ul>
+            
+            </div>
+            <div class="col-md-3">
+                <h5 class="footer-title">What is Lorem Ipsum?</h5>
+                <ul class="footer-links">
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                </ul>	
+            
+            </div>
+        </div>
+    </div>
+</div>
+ <!-- Add this modal for popup -->
+ <div class="modal fade" id="cartSuccessModal" tabindex="-1" aria-labelledby="cartSuccessModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cartSuccessModalLabel">Item added to your basket</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-2">
+                    <img src="" class="modalImage" width="50" style="border:1px solid #ddd; padding:1px;" />
+                </div>
+                <div class="col-md-7">
+                    <h6 class="modalProdTitle"></h6>
+                    <p class="modalProdPriceSection">Product Code: <span class="modalProdCode"></span></p>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="modalProdPriceInfo">$<span class="modalProdPrice"></span></h5>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-warning" data-bs-dismiss="modal">Continue Shopping</button>
+            <a class="btn btn-primary" href="/cart">View Basket</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  $(function() {
+    $('.addtocart_old').on('click', function(e) {
+      e.preventDefault();
+      var $form = $(this).closest('form');
+      $.ajax({
+        url: $form.attr('action'),
+        method: 'POST',
+        data: $form.serialize(),
+        headers: {'X-Requested-With': 'XMLHttpRequest'},
+        success: function(response) {
+          if (response.success) {
+            //$('#cartSuccessModal .modal-body').text(response.message);
+            var image_path = '{% static 'images/' %}'+response.product_image;
+            $('#cartSuccessModal').modal('show');
+            $('#itemsincart').text(response.cart_count);
+            $('.modalImage').attr('src', image_path);   
+            $('.modalProdTitle').text(response.product_name);
+            $('.modalProdPrice').text(response.product_price);
+            $('.modalProdCode').text(response.product_id);  
+          }
+        }
+      });
+    });
+  });
+  </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+
+    <div class="row breadcrumb-row">
+        <div class="col-md-12">
+            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Order</li>
+                </ol>
+            </nav>
+        </div>
+    </div>    
+    <div style="height:30px"></div>
+    <div class="row" id="pdp-main">
+        <div class="col-md-12">           
+            <div class="order-confir">
+                <h2 class="text-success">🎉 Thank you for your order!</h2>
+                <div class="gree-area">
+                    <h5>ORDER CONFIRMATION</h5>
+                    
+                    <p>Your order # <strong>{{ order.id }}</strong> has been placed successfully.</p>
+                    <p>You will get notified on your email id: <strong>{{ order.email }}</strong></p>
+                    <h5 class="card-title">Customer Information</h5>
+                    <div style="height:15px"></div>
+                    <p><strong>Name:</strong> {{ order.customer_name }}</p>
+                    <p><strong>Email:</strong> {{ order.email }}</p>
+                    <p><strong>Address:</strong> {{ order.address }}</p>
+                </div>
+                <div style="height:30px"></div>
+                <a href="{% url 'shop' %}" class="btn btn-primary">Continue Shopping</a>
+            </div>
+        </div>                      
+    </div>    
+</div>
+{% endblock %}

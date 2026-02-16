@@ -1,0 +1,147 @@
+#header,#navbar,#footer{background-color:#002980}
+#header .navbar-nav .nav-link.active, #header .navbar-nav .nav-link.show, #header .navbar-brand, #header .nav-link,.footer-title{color:#fff !important}
+.delivery-inner{border:1px solid #ddd; border-radius:3px;padding-top:10px; padding-bottom:4px}
+.delivery-inner ul li, .footer-links li{list-style:none; padding-bottom:10px;}
+.footer-links li a{color:#fff !important;}
+.footer-links {margin:0;padding:0px}
+.tab-content{padding-top:18px;}
+.prod-details{padding-top:40px;padding-bottom:40px;}
+#footer{padding:30px 0px}
+#header{padding:10px 0px;}
+a{text-decoration:none;}
+.delivery-inner ul li img {
+    padding-right: 8px;
+}
+.product-item {padding-bottom: 8px;}
+.container1 {
+  transform: translate(-50%, -50%);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+	border: 1px solid #333;
+	padding: 10px;
+	border-radius: 5px
+}
+body{background:#eee;}
+.container1 p {
+  text-align: center;
+  font-size: 32px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-weight: 700;
+}
+
+#result-text {
+  font-size: 40px;
+  font-weight: 900;
+}
+
+.container1 .button {
+  outline: none;
+  border: none;
+  background: none;
+  font-size: 55px;
+  cursor: pointer;
+  border-radius: 100px;
+  padding: 10px 20px;
+}
+
+.container1 .button:hover {
+  background-color: rgba(0, 0, 0, 0.133);
+}
+.quantity{padding-top:20px;}
+.breadcrumb-row{padding-top:30px;padding-bottom:20px;}
+.modalProdPriceSection{font-size:14px;}
+.modalProdPriceInfo{color:#ce2127;font-weight:bold}
+.price-section{padding-top:20px;padding-bottom:20px;color:#ce2127;font-weight:bold}
+#product-title{padding-bottom:30px;}
+#sp-price {
+    padding-left: 8px;
+}
+.loader{position:relative;display:none;}
+.loading {
+  height: 0;
+  width: 0;
+  padding: 15px;
+  border: 6px solid #ccc;
+  border-right-color: #002980;
+  border-radius: 22px;
+  -webkit-animation: rotate 1s infinite linear;
+  /* left, top and position just for the demo! */
+  position: absolute;
+  left: 0%;
+  top: 50%;
+}
+
+@-webkit-keyframes rotate {
+  /* 100% keyframe for  clockwise. 
+	 use 0% instead for anticlockwise */
+  100% {
+	-webkit-transform: rotate(360deg);
+  }
+}
+.center-heading { text-align: center; letter-spacing:1px; display: grid; grid-template-columns: 1fr max-content 1fr; grid-template-rows: 27px 0; grid-gap: 20px; align-items: center;}
+.center-heading:after,.center-heading:before {content: " ";display: block;border-bottom: 3px solid #002980;border-top: 1px solid #002980;height: 5px;background-color:#f8f8f8;}
+.delivery-options .header, .new-confirmation .header, .payment-btn-container .header, .payment-options .header {
+  width: 100%;
+  background: #233F92;
+  padding: 12px 15px;
+  font-size: 17px;
+  color: #fff;
+  font-family: 'ProximaNovaLight';
+  border-radius: 2px 2px 0 0;
+  line-height: 18px;
+}
+.delivery-options .delivery-headings, .payment-options .payment-headings {
+  background: #f0f0f0;
+  padding: 14px 0px;
+  margin: 0;
+}
+
+.delivery-options .delivery-data, .payment-options .payment-data {
+  cursor: pointer;
+  position: relative;
+  margin: 0 20px;
+  border: 1px solid #f1f1f1;
+  padding: 7px 0px;
+}
+.delivery-options, .payment-btn-container, .payment-options{
+  box-shadow: 0 0 15px -10px rgba(0,0,0,0.3);
+  border: 1px solid #d9d9d9;
+}
+.delivery-options .delivery-data-container, .payment-options .payment-data-container {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.delivery-option .option-carriage label strong {
+  font-family: 'ProximaNova';
+  font-weight: normal;
+  float: left;
+  width: 100%;
+  font-size: 15px;
+  color: #000;
+}
+.carriage-description {
+  color: #6e6f6f;
+  font-size: 13px;
+  font-family: 'ProximaNova';
+  display: block;
+}
+.login-container, .register-container {
+  border: 1px solid #ddd;
+  padding: 30px 20px;
+  background: #eee;
+  border-radius: 3px;
+  box-shadow: 0 2px 2px 1px #bebebe;
+}
+.login-container .form-label {
+  width: 100%;
+  font-weight: bold;
+}
+.login-container input {
+  width: 90%;
+  height: 50px;
+  font-size: 16px;
+  padding: 5px 10px;
+}
+.register-btn {margin-top: 20px;}

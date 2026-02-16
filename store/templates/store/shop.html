@@ -1,0 +1,76 @@
+{% extends 'store/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container my-4">
+    <div class="row breadcrumb-row">
+        <div class="col-md-12">
+            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Shop</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <div style="height:30px"></div>    
+    <div class="row">
+        
+        <div class="col-md-3">
+            <h5 class="mb-4">Shop by Category</h5>
+            <div class="categories">
+                <ul>
+                    <li><a href="{% url 'shop' %}" class="{% if not selected_category %}active{% endif %}">
+                        All
+                    </a></li>
+                    {% for cat in categories %}
+                    <li><a href="{% url 'shop' %}?category={{ cat.id }}" 
+                        class="{% if selected_category == cat.id %}active{% endif %}">
+                            {{ cat.name }}
+                        </a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <h5 class="mb-4">Shop Our Products</h5>
+                {% for product in products %}
+                <div class="col-md-4 product-item">
+                    <div class="card h-100">
+                        <a href="/product/{{ product.id }}">
+                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="/product/{{ product.id }}">{{ product.name }}</a></h5>
+                            <p class="card-description">{{ product.description }}</p>
+                            <p class="card-text cat"><strong>Category:</strong> {{ product.category }}</p>
+                            <p class="card-text brand"><strong>Brand:</strong> {{ product.brand }}</p>
+                            <div class="row">
+                            <div class="col-6">                            
+                                {% if product.special_price %}
+                                    <p class="card-text price-section">
+                                        <span class="text-muted text-decoration-line-through">${{ product.price }}</span>
+                                        <span class="text-danger ms-2">${{ product.special_price }}</span>
+                                    </p>
+                                {% else %}
+                                    <p class="card-text price-section">${{ product.price }}</p>
+                                {% endif %}
+                            </div>
+                            <div class="col-6">
+                                <!-- <form method="post" action="{% static 'add_to_cart' %}" class="d-inline"> -->
+                                    <input type="hidden" name="quantity" value="1">                            
+                                    <button type="button" class="add-to-cart-btn btn btn-primary addtocart" data-product-id="{{ product.id }}" data-name="{{ product.name }}" data-price="{{ product.price }}" data-image="{{ product.image.url }}">Add to Cart</button>
+                                <!-- </form> -->
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

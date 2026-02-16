@@ -1,0 +1,71 @@
+<!-- store/templates/store/cart.html -->
+
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row breadcrumb-row">
+        <div class="col-md-12">
+            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Cart</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <div style="height:30px"></div>
+
+{% if cart_items %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>&nbsp;</th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart_items %}
+        <tr class="cart-item">
+            <td><img src="{{ item.image }}" alt="{{ item.name }}" style="width:50px;height:50px;"></td>
+            <td>{{ item.name }}</td>       
+            <td>${{ item.price }}</td>
+            <td><input type="number" name="quantity_{{ item.product.id }}" value="{{ item.quantity }}" min="0" class="form-control" style="width:80px;"></td>
+            <td>${{ item.subtotal }}</td>
+            <td>
+                <button type="submit" class="btn btn-danger btn-sm remove-cart-btn" data-product-id="{{ item.product.id }}">Remove</button>
+            </td>
+        </tr>       
+        {% endfor %}
+    </tbody>
+</table>
+<div class="row order-summary" style="background-color: #eee;padding: 12px 6px; border-radius: 3px;">
+    <div class="col-md-7">
+
+    </div>
+    <div class="col-md-5" style="text-align: right;">
+        <div class="mb-3">
+            <strong>Subtotal:</strong> ${{ subtotal|floatformat:2 }}
+        </div>
+        <div class="mb-3">
+            <strong>Delivery Fee:</strong> ${{ settings.shipping_charge }}
+        </div>
+        <div class="mb-3">
+            <strong>Total:</strong> ${{ total|floatformat:2 }}
+        </div>
+    </div>
+</div>
+<div style="height:30px"></div>
+<button type="submit" class="btn btn-primary">Update Cart</button>
+<a href="{% url 'checkout' %}" class="btn btn-success">Proceed to Checkout</a>
+
+{% else %}
+<p>Your cart is empty.</p>
+{% endif %}
+</div>
+{% endblock %}

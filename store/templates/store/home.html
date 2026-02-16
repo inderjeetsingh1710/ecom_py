@@ -1,0 +1,49 @@
+{% extends 'store/base.html' %}
+{% block title %}Products - My Store{% endblock %}
+{% block content %}
+{% load static %}
+<div id="top-banner" style="text-align:center;background:#fff; color:#fff;">
+    <img src="{% static 'images/banner-4.png' %}" alt="Special offer" width="100%" />
+    <p>Special offer</p>		
+</div>
+
+<div class="container my-4">
+        
+    <h3 class="mb-4">Shop Our Products</h3>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for product in products %}
+        <div class="col">
+            <div class="card h-100">
+                <a href="/product/{{ product.id }}">
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title"><a href="/product/{{ product.id }}">{{ product.name }}</a></h5>
+                    <p class="card-description">{{ product.description }}</p>
+                    <p class="card-text cat"><strong>Category:</strong> {{ product.category }}</p>
+                    <p class="card-text brand"><strong>Brand:</strong> {{ product.brand }}</p>
+                    <div class="row">
+                    <div class="col-7">                            
+                        {% if product.special_price %}
+                            <p class="card-text price-section">
+                                <span class="text-muted text-decoration-line-through">${{ product.price }}</span>
+                                <span class="text-danger ms-2">${{ product.special_price }}</span>
+                            </p>
+                        {% else %}
+                            <p class="card-text price-section">${{ product.price }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-5">                            
+                        <!-- <form method="post" action="{% static 'add_to_cart' %}" class="d-inline"> -->
+                            <input type="hidden" name="quantity" value="1">                            
+                            <button type="button" class="add-to-cart-btn btn btn-primary addtocart" data-product-id="{{ product.id }}" data-name="{{ product.name }}" data-price="{{ product.price }}" data-image="{{ product.image.url }}">Add to Cart</button>
+                        <!-- </form> -->
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

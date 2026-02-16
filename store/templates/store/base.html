@@ -1,0 +1,215 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Posthog Application | Python</title> 
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<link rel="stylesheet" href="{% static 'css/style.css' %}?v={{ timestamp }}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$('.add-to-cart-btn').click(function (e) {
+				e.preventDefault();
+		
+				const productId = $(this).data('product-id');
+				const product_name = $(this).data('name');
+				const product_price = $(this).data('price');
+				const image_path = $(this).data('image');
+		
+				$.ajax({
+					url: '{% url "add_to_cart_ajax" %}',
+					type: 'POST',
+					data: {
+						'product_id': productId,
+						'csrfmiddlewaretoken': '{{ csrf_token }}'
+					},
+					success: function (response) {
+						if (response.success) {
+							//alert('Item added to cart! Total items: ' + response.total_items);
+							// Optionally update cart icon count
+							$('#cart-count').text(response.total_items);
+							$('#cartSuccessModal').modal('show');
+							$('.modalImage').attr('src', image_path);   
+							$('.modalProdTitle').text(product_name);
+							$('.modalProdPrice').text(product_price);
+							$('.modalProdCode').text(productId);  
+						}
+					},
+					error: function () {
+						alert('Error adding item to cart.');
+					}
+				});
+			});
+		});
+		</script>
+		
+	
+	
+
+	<style>span.cart{color: #fff;background: red;padding: 1px 8px;border-radius: 10px;font-size: 13px;position: absolute;top: 20px;}h4.product-title {font-size: 18px;padding-top: 14px;} .navbar-expand-lg .navbar-nav{gap:13px} .modal-title svg{color:green;width:auto;height:32px;}
+	.card-img-top {width: 100%;height: 275px;object-fit: contain;padding: 2px;}
+	.card-description {font-size: 14px;color: #6c757d;}	
+	.card-text.cat {margin-bottom: 0px;}
+	.card-text.brand {margin-bottom: 0px;}
+	button.addtocart {margin-top: 15px;}
+	/* Checkout */
+		
+	.billing_text {
+		  font-family: "Montserrat", sans-serif;
+		  font-weight: 500;
+		  margin: 0;
+		  font-size: 16px;
+		  color: #737373;
+		}		
+
+		.food_img_price_des {
+		  display: flex;
+		  margin-bottom: 1rem;
+		}
+
+		.food_img_price_des .cart_food_img {
+		  width: 85px;
+		  height: 51px;
+		  overflow: hidden;
+		  border: 1px solid #d4d4d491;
+		  padding: 4px;
+		}
+
+		.food_img_price_des .cart_food_img img {
+		  width: 100%;
+		  height: 100%;
+		  object-fit: cover;
+		}
+
+		.food_img_price_des .food_dec_flex {
+		  margin-left: 2rem;
+		}
+
+		.food_img_price_des .food_dec_flex p {
+		  color: #737373;
+		  margin: 0;
+		  font-family: "Montserrat", sans-serif;
+		  font-weight: 500;
+		  font-size: 14px;
+		}
+
+		.food_img_price_des .food_dec_flex p:last-child {
+		  color: red;
+		}
+
+		.yourCart_div {
+		  border: 1px solid #d4d4d491;
+		  padding: 19px;
+		  margin-top: 2rem;
+		}		
+
+		.cart_total .price_total {
+		  display: flex;
+		  margin-bottom: 5px;
+		  justify-content: space-between;
+		}
+
+		.cart_total .price_total p {
+		  color: #737373;
+		  margin: 0;
+		  font-family: "Montserrat", sans-serif;
+		  font-weight: 500;
+		  font-size: 14px;
+		}
+
+		.total_btn_cart {
+		  width: 100%;
+		  background: #335CB3 !important;
+		  border-color: #335CB3 !important;
+		  padding: 9px 19px !important;
+		  display: flex;
+		  justify-content: space-between;
+		  color: #fff;
+		  font-weight: 500;
+		  border-style: unset;
+		  font-family: "Montserrat", sans-serif;
+		}
+
+		.total_btn_cart:hover {
+		  background-color: #002980 !important;
+		  border-color: #002980 !important;
+		}
+
+		.cart_total {
+		  border: 1px solid #d4d4d491;
+		  padding: 8px 19px;
+		  border-top: 0;
+		}
+
+		.input_form .input_box_cart input,
+		.input_form .input_box_cart textarea {
+		  width: 100%;
+		  border: 1px solid #d4d4d491;
+		  outline: none;
+		  padding: 6px 10px;
+		  font-weight: 500;
+		  font-size: 13px;
+		  resize: none;
+		  font-family: "Montserrat", sans-serif;
+		}
+
+		.input_form .input_box_cart {
+		  margin-bottom: 15px;
+		}
+
+		.mb_23px {
+		  margin-bottom: 20px !important;
+		}
+
+		.text_center_button {
+		  justify-content: center;
+		}
+
+		.input_form {
+		  margin-top: 2rem;
+		}
+
+		.footer-parallax-container {
+		  margin-bottom: 0 !important;
+		  box-shadow: none;
+		  min-height: auto !important;
+		}
+
+		.footer-parallax {
+		  height: auto !important;
+		  position: relative !important;
+		  background-color: #f5f5f5 !important;
+		  z-index: 1;
+		}
+
+		.section-bg-image_full_height {
+		  background-image: url(../images/hd-8.png);
+		  background-attachment: fixed;
+		}
+
+		.mt-12px { margin-top: 12px !important;	}
+
+		.bg_green { background-color: #4caf50 !important; border-color: #4caf50 !important;	}
+
+		.bg_green:hover {
+		  background-color: #4caf50 !important;
+		  border-color: #4caf50 !important;
+		}
+
+		button{
+		  outline:none !important;
+		}
+		.order-confir {text-align: center;box-shadow: 1px 3px 18px 6px #999;padding: 50px;border: 1px solid #ddd;border-radius: 8px;margin-bottom: 80px;}
+	.gree-area{background: #d7f5da;padding: 30px 20px;}
+	.gree-area h5 {font-weight: 600;}
+	.order-confir h2 {padding-bottom: 10px;}
+	</style>
+</head>
+<body style="background:#fff;">
+	{% include 'store/header.html' %}
+	{% block content %}{% endblock %}
+	{% include 'store/footer.html' %}
+</body>
+</html>

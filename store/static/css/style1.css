@@ -1,0 +1,57 @@
+#header,#navbar,#footer{background-color:#563d7c}
+#header .navbar-nav .nav-link.active, #header .navbar-nav .nav-link.show, #header .navbar-brand, #header .nav-link,.footer-title{color:#fff !important}
+.delivery-inner{border:1px solid #ddd; border-radius:3px;padding-top:10px; padding-bottom:4px}
+.delivery-inner ul li, .footer-links li{list-style:none; padding-bottom:10px;}
+.footer-links li a{color:#fff !important;}
+.footer-links {margin:0;padding:0px}
+.tab-content{padding-top:18px;}
+.prod-details{padding-top:40px;padding-bottom:40px;}
+#footer{padding:30px 0px}
+#header{padding:10px 0px;}
+a{text-decoration:none;}
+.delivery-inner ul li img {
+    padding-right: 8px;
+}
+.container1 {
+  transform: translate(-50%, -50%);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+	border: 1px solid #333;
+	padding: 10px;
+	border-radius: 5px
+}
+body{background:#eee;}
+.container1 p {
+  text-align: center;
+  font-size: 32px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-weight: 700;
+}
+
+#result-text {
+  font-size: 40px;
+  font-weight: 900;
+}
+
+.container1 .button {
+  outline: none;
+  border: none;
+  background: none;
+  font-size: 55px;
+  cursor: pointer;
+  border-radius: 100px;
+  padding: 10px 20px;
+}
+
+.container1 .button:hover {
+  background-color: rgba(0, 0, 0, 0.133);
+}
+.quantity{padding-top:20px;}
+.breadcrumb-row{padding-top:30px;padding-bottom:20px;}
+.price-section{padding-top:20px;padding-bottom:20px;}
+#product-title{padding-bottom:30px;}
+#sp-price {
+    padding-left: 8px;
+}

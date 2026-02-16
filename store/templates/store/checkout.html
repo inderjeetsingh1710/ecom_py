@@ -1,0 +1,285 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row breadcrumb-row">
+        <div class="col-md-12">
+            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <div style="height:30px"></div>	  
+</div>
+
+<div class="container content">
+    <div class="row">
+      <div class="col-md-7">
+        <p class="billing_text">Billing Address</p>
+        <div class="form-error" id="form-error" style="color: red;padding: 10px 0px;border-radius: 5px;margin-bottom: 10px;"></div>
+        <form method="post" id="checkout_form" onsubmit="">
+            <div class="input_form">
+                <div class="row">
+                    <div class="col-md-6">
+                    <div class="input_box_cart">                  
+                        <input type="text" placeholder="First Name" name="first_name" id="first_name" value="" required />
+
+                    </div>
+                    </div>
+                    <div class="col-md-6">
+                    <div class="input_box_cart">
+                        <input type="text" placeholder="Last Name" name="last_name" id="last_name" value="" required />
+                    </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                    <div class="input_box_cart">
+                        <input type="text" placeholder="Email Address" name="email" id="email" value="" required />
+                    </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                    <div class="input_box_cart">
+                        <input type="text" placeholder="Mobile Number" name="mobile" id="mobile" value="1234567890" />
+                    </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="input_box_cart">
+                            <textarea rows="4" placeholder="Address" name="address" id="address" required>#101, abc</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="input_box_cart">
+                            <input type="text" placeholder="Zipcode" name="zip_code" id="zip_code" value="160101" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input_box_cart">
+                            <input type="text" placeholder="City" name="city" id="city" value="Chandigarh" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input_box_cart">
+                            <input type="text" placeholder="State" name="state" id="state" value="Chandigarh" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input_box_cart">
+                            <!-- <input type="text" placeholder="Country" name="country" id="country" value="India" /> -->
+                            <select name="country" id="country" class="form-control">
+                                {% for country in countries %}
+                                    <option value="{{ country.id }}">{{ country.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>        
+            <div class="delivery-options" style="margin-top: 10px;">
+                <div class="billing_text header">Delivery options</div>
+                <div class="row row-xs-height delivery-headings hidden-xs">
+                    <div class="col-md-9 col-md-height"><span>Please select a delivery option</span></div>                        
+                    <div class="col-md-3 col-md-height"><span>Price</span></div>
+                </div>
+                <div class="col-md-12 delivery-data-container">                   
+                    {% if carriages %}
+                        {% for carriage in carriages %}
+                        <div class="row row-xs-height delivery-data ">
+                            <div class="col-md-9 col-md-height option-carriage">
+                                <div class="form-check">
+                                    <input 
+                                      type="radio" 
+                                      name="carriage_id" 
+                                      id="carriage_{{ carriage.id }}" 
+                                      value="{{ carriage.id }}" 
+                                      class="form-check-input"
+                                      data-price="{{ carriage.price }}"
+                                      {% if forloop.first %}checked{% endif %} />
+                                      <label class="form-check-label" for="carriage_{{ carriage.code }}">
+                                        <div class="carriage-info"><strong>{{ carriage.name }}</strong><span class="carriage-description">{{ carriage.description }}</span></div> 
+                                      </label> 
+                                  </div>
+                            </div>                               
+                            <div class="col-md-3 col-md-height carraiage-price">${{ carriage.price|floatformat:2 }}</div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No carriages available</p>
+                      {% endif %}
+                                         
+                </div>
+            </div>
+            <div class="payment-options" style="margin-top: 10px;">
+                <div class="billing_text header">Payment options</div>
+                <div class="row row-xs-height payment-headings hidden-xs">
+                    <div class="col-md-12 col-md-height"><span>Please select a payment option</span></div>
+                </div>
+                <div class="col-md-12 payment-data-container">                   
+                    {% if payment_methods %}
+                        {% for payment_method in payment_methods %}
+                        <div class="row row-xs-height payment-data ">
+                            <div class="col-md-12 col-md-height option-payment">
+                                <div class="form-check">
+                                    <input 
+                                      type="radio" 
+                                      name="payment_method_id" 
+                                      id="payment_method_{{ payment_method.id }}" 
+                                      value="{{ payment_method.id }}" 
+                                      class="form-check-input"
+                                      {% if forloop.first %}checked{% endif %} />
+                                      <label class="form-check-label" for="payment_method_{{ payment_method.code }}">
+                                        <div class="payment-info"><strong>{{ payment_method.name }}</strong></div> 
+                                      </label> 
+                                  </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No payment methods available</p>
+                      {% endif %}
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-md-8">
+                    <button style="display:none;" type="button" class="total_btn_cart text_center_button" id="delevery_to" data-cartTotal="" data-cartitems='' data-currency="">Delivery Here</button>
+                    {% csrf_token %}
+                    <button type="button`" class="total_btn_cart text_center_button" id="place_order" data-cartTotal="" data-cartitems='' data-currency="" data-cartdiscount="" data-cartid="" data-shipping="" data-coupon="" data-cartitemsga=''>Place Order</button>
+                    
+                </div>
+                <div class="col-md-4">
+                    <div class="loader" id="loader"><div class="loading"></div></div>
+                </div>
+            </div>        
+        </form>
+      </div>
+      <div class="col-md-5">
+        <p class="billing_text">Your Cart</p>
+        <div class="yourCart_div">
+          <div class="cart_img_content">	             
+            {% for item in items %}             
+                <!-- start -->
+                <div class="food_img_price_des">
+                  <div class="cart_food_img">
+                    <img src="{{ item.image }}" alt="{{ item.product.name }}">
+                  </div>
+                  <div class="food_dec_flex">
+                    <p>{{ item.product.name }}</p>
+                    <p>${{ item.product.price|floatformat:2 }} x {{ item.qty }}</p>
+                  </div>
+                </div>
+                {% endfor %}
+            <!-- end -->              
+          </div>
+        </div>
+        <div class="cart_total">
+          <div class="price_total">
+            <p>Sub Total</p>
+            <p>$<span id="subtotal_amount">{{ total|floatformat:2 }}</span></p>
+          </div>
+          <hr />          
+          <div class="price_total">
+            <p>Shipping</p>
+            <p>$<span id="shipping_amount">{{ shipping|floatformat:2 }}</span></p>
+          </div>
+        </div>
+        <button type="button" class="total_btn_cart">
+          <span>Total</span>
+          <span>$<span id="grand_total_amount">{{ grand_total|floatformat:2 }}</span></span>
+        </button>
+        <input type="hidden" id="subtotal_value" value="{{ total }}" />
+      </div>
+    </div>
+  </div>
+  <div style="height:30px"></div>
+  <script>
+    $(document).ready(function () {
+        function updateTotalsFromSelectedCarriage() {
+            var subtotal = parseFloat($("#subtotal_value").val()) || 0;
+            var selected = $('input[name="carriage_id"]:checked');
+            var shipping = parseFloat(selected.data('price')) || 0;
+            var grand = subtotal + shipping;
+            $("#shipping_amount").text(shipping.toFixed(2));
+            $("#grand_total_amount").text(grand.toFixed(2));
+        }
+
+        // Initial total update on load
+        updateTotalsFromSelectedCarriage();
+
+        // Update totals when carriage selection changes
+        $(document).on('change', 'input[name="carriage_id"]', function() {
+            updateTotalsFromSelectedCarriage();
+        });
+        // Handle "delivery_to" button click (if used again)
+        $('#delevery_to').on('click', function () {
+            if (validateForm()) {
+                $('#loader').show();
+                $('#delevery_to').hide();
+                setTimeout(function () {
+                    $('#loader').hide();
+                    $('#place_order').css('visibility', 'visible');
+                }, 1500);
+            }
+        });
+        // Handle "place_order" button click
+        $('#place_order').on('click', function () {
+            if (validateForm()) {
+                $('#loader').show();
+                console.log('Redirecting to order confirmation page');            
+                $('#checkout_form').submit();
+            } else {
+                return false;
+            }
+        });
+
+        // Form validation function
+        function validateForm() {
+            var firstName = $('#first_name').val();
+            var lastName = $('#last_name').val();
+            var email = $('#email').val();
+            var address = $('#address').val();
+            var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            if (!firstName) {
+                $('#form-error').text("First Name is required");
+                $('#first_name').focus();           
+                return false;
+            }
+
+            if (!lastName) {
+                $('#last_name').focus();
+                $('#form-error').text("Last Name is required");
+                return false;
+            }
+
+            if (!email) {
+                $('#form-error').text("Email is required");
+                $('#email').focus();
+                return false;
+            } else if (!emailPattern.test(email)) {
+                $('#form-error').text("Please enter a valid email address");
+                $('#email').focus();
+                return false;
+            }
+
+            if (!address || address.length < 5) {
+                $('#form-error').text("Address must be at least 10 characters long");
+                $('#address').focus();
+                return false;
+            }
+
+            return true;
+        }
+    });
+</script>
+{% endblock %}
+
